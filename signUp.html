@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #9ed4f7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .signup-container {
+        width: 300px;
+        padding: 60px;
+        background-color: #fff;
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: flex;
+        flex-direction: column;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        border-radius: 3px;
+    }
+
+    button {
+        background-color: blue;
+        padding: 8px 40px;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 100;
+        border: none;
+        outline: none;
+        margin-top: 22px;
+        border-radius: 4%;
+        width: 100%;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<body>
+    <div class="signup-container">
+        <h2>Sign Up</h2>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const name = e.target.name.value;
+            const email = e.target.email.value;
+            const password = e.target.password.value;
+            const confirmPassword = e.target.confirmPassword.value;
+
+            if (name === '' || email === '' || password === '' || confirmPassword === '') {
+                alert('All fields are required.');
+                return;
+            }
+            if (password !== confirmPassword) {
+                alert('passwords are not matching');
+                return;
+            }
+            const users = JSON.parse(localStorage.getItem('userDetails')) ?? [];
+            users.push({
+                "name": name,
+                "email": email,
+                "password": password,
+                "confirmPassword": confirmPassword,
+            });
+            localStorage.setItem("userDetails", JSON.stringify(users));
+
+
+            alert('Sign up successful!....');
+            window.location.href = 'login-SHAKUNTALA.html';
+        });
+</script>
+</body>
+
+</html>
