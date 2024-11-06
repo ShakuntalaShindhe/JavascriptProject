@@ -121,6 +121,40 @@ icon.addEventListener('click', () => {
 
     }
 })
+
+
+
+
+ /*const form = document.querySelector('form');
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const name = e.target.name.value;
+            const email = e.target.email.value;
+            const password = e.target.password.value;
+            const confirmPassword = e.target.confirmPassword.value;
+
+            if (name === '' || email === '' || password === '' || confirmPassword === '') {
+                alert('All fields are required.');
+                return;
+            }
+            if (password !== confirmPassword) {
+                alert('passwords are not matching');
+                return;
+            }
+            const users = JSON.parse(localStorage.getItem('userDetails')) ?? [];
+            users.push({
+                "name": name,
+                "email": email,
+                "password": password,
+                "confirmPassword": confirmPassword,
+            });
+            localStorage.setItem("userDetails", JSON.stringify(users));
+
+
+            alert('Sign up successful!....');
+            window.location.href = 'login.html';
+        });*/
     </script>
 </body>
 </html>

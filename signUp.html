@@ -1,119 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #9ed4f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
+        .signup-container {
+            width: 300px;
+            padding: 60px;
+            background-color: #fff;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.5);
+            border-radius: 3px;
+        }
+
+        .button {
+            background-color: blue;
+            padding: 8px 40px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 100;
+            border: none;
+            outline: none;
+            margin-top: 22px;
+            border-radius: 4%;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: rgb(179, 4, 4);
+        }
+    </style>
 </head>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #9ed4f7;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-
-    .signup-container {
-        width: 300px;
-        padding: 60px;
-        background-color: #fff;
-        border-radius: 6px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-
-    h2 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    label {
-        display: flex;
-        flex-direction: column;
-    }
-
-    input {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 20px;
-        border: 1px solid rgba(0, 0, 0, 0.5);
-        border-radius: 3px;
-    }
-
-    button {
-        background-color: blue;
-        padding: 8px 40px;
-        color: #fff;
-        font-size: 16px;
-        font-weight: 100;
-        border: none;
-        outline: none;
-        margin-top: 22px;
-        border-radius: 4%;
-        width: 100%;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #45a049;
-    }
-</style>
-
 <body>
     <div class="signup-container">
         <h2>Sign Up</h2>
-        <form>
+        <form id="signupForm">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" placeholder="Enter your name..." />
+            <span id="nameError" class="error"></span>
 
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" placeholder="text@gmail.com" />
+            <span id="emailError" class="error"></span>
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" />
+            <span id="passError" class="error"></span>
 
             <label for="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" />
+            <span id="confirmError" class="error"></span>
 
-            <button type="submit">Sign Up</button>
+            <input type="submit" value="Sign Up" class="button" />
         </form>
     </div>
     <script>
-        const form = document.querySelector('form');
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
+        function emailValidate(email) {
+            var result = /\S+@\S+\.\S+/;
+            return result.test(email);
+        }
 
-            const name = e.target.name.value;
-            const email = e.target.email.value;
-            const password = e.target.password.value;
-            const confirmPassword = e.target.confirmPassword.value;
+        function capitalLetter(password) {
+            var result = /[A-Z]/;
+            return result.test(password);
+        }
 
-            if (name === '' || email === '' || password === '' || confirmPassword === '') {
-                alert('All fields are required.');
-                return;
+        function specialChar(password) {
+            var result = /[@!#$%&^*?()]/;
+            return result.test(password);
+        }
+
+        function onSubmit(event) {
+            event.preventDefault();
+
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            var nameError = document.getElementById('nameError');
+            var emailError = document.getElementById('emailError');
+            var passError = document.getElementById('passError');
+            var confirmError = document.getElementById('confirmError');
+            var isValidate = true;
+
+            if (name === '') {
+                nameError.textContent = 'Enter a name';
+                isValidate = false;
+            } else {
+                nameError.textContent = '';
             }
-            if (password !== confirmPassword) {
-                alert('passwords are not matching');
-                return;
+
+            if (email === '') {
+                emailError.textContent = 'Invalid Email';
+                isValidate = false;
+            } else if (!emailValidate(email)) {
+                emailError.textContent = 'The email should contain @ and .';
+                isValidate = false;
+            } else {
+                emailError.textContent = '';
             }
-            const users = JSON.parse(localStorage.getItem('userDetails')) ?? [];
-            users.push({
-                "name": name,
-                "email": email,
-                "password": password,
-                "confirmPassword": confirmPassword,
-            });
-            localStorage.setItem("userDetails", JSON.stringify(users));
 
+            if (password === '') {
+                passError.textContent = 'Enter a Password';
+                isValidate = false;
+            } else if (password.length < 8) {
+                passError.textContent = 'Your password length should be greater than 8 characters';
+                isValidate = false;
+            } else if (!capitalLetter(password)) {
+                passError.textContent = 'Your password should contain at least one capital letter';
+                isValidate = false;
+            } else if (!specialChar(password)) {
+                passError.textContent = 'Password should contain at least one special character';
+                isValidate = false;
+            } else {
+                passError.textContent = '';
+            }
 
-            alert('Sign up successful!....');
-            window.location.href = 'login-SHAKUNTALA.html';
-        });
-</script>
+            if (confirmPassword === '') {
+                confirmError.textContent = 'Enter a Password';
+                isValidate = false;
+            } else if (confirmPassword.length < 8) {
+                confirmError.textContent = 'Your password length should be greater than 8 characters';
+                isValidate = false;
+            } else if (!capitalLetter(confirmPassword)) {
+                confirmError.textContent = 'Your password should contain at least one capital letter';
+                isValidate = false;
+            } else if (!specialChar(confirmPassword)) {
+                confirmError.textContent = 'Password should contain at least one special character';
+                isValidate = false;
+            } else if (password !== confirmPassword) {
+                confirmError.textContent = 'Passwords do not match';
+                isValidate = false;
+            } else {
+                confirmError.textContent = '';
+            }
+
+            if (isValidate) {
+                var user = {
+                    name: name,
+                    email: email,
+                    password: password
+                };
+
+                localStorage.setItem('user', JSON.stringify(user));
+                alert('Sign Up successful!');
+                window.location.href = 'login.html'; 
+            }
+
+            return isValidate;
+        }
+
+        document.getElementById('signupForm').addEventListener('submit', onSubmit);
+    </script>
 </body>
-
 </html>
