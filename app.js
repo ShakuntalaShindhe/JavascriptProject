@@ -66,49 +66,9 @@ surgery.forEach((card) => {
 const myButton = document.getElementById('users');
 
 function redirectToUserPage() {
-    window.location.href = 'user.html';
+    window.location.href = 'patients.html';
 }
 
 myButton.addEventListener('click', redirectToUserPage);
 
 
-//slider
-/*const slider=document.querySelector('.slider-img')
-const images=['doctorsimg.avif','glou,jpg','hos.jpg','ste.jpg','stethescope.jpg']
-const i=0;
-
-function setImage(){
-    slider.setAttribute('src',images[i])
-}
-function autoslider(){
-    i = (i+1) % images.length;
-    setImage()
-    setTimeout(autoslider,2000)
-}
-setImage();
-autoslider();*/
-
-const reference = document.getElementById('reference');
-
-async function fetchUsers() {
-    const data = await fetch('https://dummyjson.com/users');
-    const posts = await data.json();
-    console.log(posts);
-    posts.users.forEach((val) => {
-        reference.innerHTML += `
-            <div class="cards">
-                <p>id: ${val.id}</p>
-                <p>First Name: ${val.firstName}</p>
-                <p>Last Name: ${val.lastName}</p>
-                <p>Age: ${val.age}</p>
-                <p>Email: ${val.email}</p>
-                <p>DOB: ${val.birthDate}</p>
-                <p>BloodGroup:${val.bloodGroup}</p>
-                <p>Height:${val.height}</p>
-                <p>Weight:${val.weight}</p>
-               
-            </div>`;
-    });
-}
-
-fetchUsers();
