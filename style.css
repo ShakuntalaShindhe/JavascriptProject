@@ -340,7 +340,10 @@
     }
     .main img{
         width: 90%;
-        /* margin-top: 30px; */
     }
+    .heading {
+      padding: 60px;
+      padding-bottom: 60px;
+  }
   }
   
